@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Lanterna</string>
+    <string name="action_about">Sobre</string>
+    <string name="about">Usar a lanterna por muito tempo pode superaquecer o LED e danificá-lo.
+        				\n\nVersão 1.0 © 2016 Bruno Resende </string>
+    <string name="aboutSnack">Lanterna © 2016 Bruno Resende</string>
+    <string name="notification_text">está ligada</string>
+    <string name="notification_button">Desligar</string>
+
+</resources>

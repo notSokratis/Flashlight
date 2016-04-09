@@ -19,6 +19,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
 import android.widget.SeekBar;
 
@@ -29,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public Camera cam;
     public Camera.Parameters camParams;
     public int frequency;
-    public StroboRunner stroboClass;
+    public StroboRunner stroboClass = new StroboRunner();
     public Thread t;
     public ImageButton flashSwitch;
     BroadcastReceiver mReceiver;
@@ -61,8 +63,12 @@ public class MainActivity extends AppCompatActivity {
                 turnOnOff();
 
                 if (!flashIsOn) {
+                    Animation rotate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.counter_clockwise_rotate_animation);
+                    flashSwitch.startAnimation(rotate);
                     flashSwitch.setImageResource(R.drawable.flash_button_off);
                 } else {
+                    Animation rotate = AnimationUtils.loadAnimation(MainActivity.this, R.anim.clockwise_rotate_animation);
+                    flashSwitch.startAnimation(rotate);
                     flashSwitch.setImageResource(R.drawable.flash_button_on);
                 }
             }
@@ -116,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
     public void turnOnOff() {
         if (flashIsOn) {
             if (frequency != 0 && t == null) {
-                stroboClass = new StroboRunner();
                 stroboClass.stopRunning = false;
                 t = new Thread(stroboClass);
                 t.start();
@@ -152,10 +157,10 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder notifyFlash = new NotificationCompat.Builder(this)
                 .setOngoing(true)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle("Flashlight")
-                .setContentText("is on!")
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.notification_text))
                 .setContentIntent(launchPintent)
-                .addAction(Color.TRANSPARENT, "Turn off", finishPintent);
+                .addAction(Color.TRANSPARENT, getString(R.string.notification_button), finishPintent);
 
         notifyMgr.notify(33094095, notifyFlash.build());
     }
